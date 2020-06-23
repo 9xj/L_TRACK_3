@@ -1,0 +1,55 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Mobile Zone",
+  "version": "1.8.1",
+  "manifest_version": 2,
+  "description": "Mobile Zone Extension provides visibility into student internet access in the classroom.",
+  "browser_action": {
+    "default_icon": "popup/icon.png",
+    "default_popup": "popup/index.html"
+  },
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "identity",
+    "storage",
+    "identity.email",
+    "webRequest",
+    "webRequestBlocking",
+    "unlimitedStorage"
+  ],
+  "background": {
+    "scripts": [
+      "background/util/logging.js",
+      "background/util/util.js",
+      "background/store/verdictResponseStore.js",
+      "background/stats/stats.js",
+      "background/stats/connections.js",
+      "background/events/tabs.js",
+      "background/config/configuration.js",
+      "background/events/messaging.js",
+      "background/events/events.js",
+      "background/filtering/filtering.js",
+      "background/login/login.js",
+      "background/main.js"
+    ]
+  },
+  "content_scripts": [{
+    "all_frames": true,
+    "js": [
+      "background/filtering/content.js"
+    ],
+    "matches": [
+      "*://*/*"
+    ],
+    "run_at": "document_start"
+  }],
+  "oauth2": {
+    "client_id": "474789183549-0ln6snnujfn7h0e1e9qlcki9j057n0uk.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
